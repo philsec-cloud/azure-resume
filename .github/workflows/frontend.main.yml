@@ -1,41 +1,37 @@
-name: deploy_frontend
+name: CI with OpenID Connect
 
 on:
-  push:
-    branches: 
-      - main
-    paths:
-      - 'frontend/**'
+    push:
+        branches: [ main ]
 
 permissions:
-  id-token: write
-  contents: read
+      id-token: write
+      contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      
-      - uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    - uses: actions/checkout@v3
+    - uses: azure/login@v2
+      with:
+      client-id: ${{ secrets.AZURE_CLIENT_ID }}
+      tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+      subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Upload to blob storage
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
+    - name: Upload to blob storage
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
             az storage blob upload-batch --account-name getresumecounterphil4 --auth-mode key -d '$web' -s frontend/
-      
-      - name: Purge CDN endpoint
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az cdn endpoint purge --content-paths "/*" --profile-name "azureresumephil4" --name "azureresumephil4" --resource-group "getresumecounterphil4"
+    - name: Purge CDN endpoint
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+           az cdn endpoint purge --content-paths  "/*" --profile-name "azureresumephil4" --name "azureresumephil4" --resource-group "getresumecounterphil4"
 
-      - name: logout
-        run: |
-          az logout
-        if: always()
+  # Azure logout
+    - name: logout
+      run: |
+            az logout
+      if: always()
