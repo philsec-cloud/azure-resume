@@ -3,6 +3,8 @@ name: CI with OpenID Connect
 on:
     push:
         branches: [ main ]
+        paths:
+        -'frontend/**'
 
 permissions:
       id-token: write
