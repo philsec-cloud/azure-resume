@@ -1,7 +1,7 @@
 name: deploy_frontend
 on:
     push:
-        branches: [ main, update-frontend-endpoint ]
+        branches: [ main ]
         paths:
            -'frontend/**'  
 permissions:
