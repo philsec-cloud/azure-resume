@@ -34,7 +34,7 @@ namespace Company.Function
                 var counterResponse = await container.ReadItemAsync<Counter>("1", new PartitionKey("1"));
                 var counter = counterResponse.Resource;
 
-                // Increment counter
+                // Increments counter
                 counter.Count += 1;
 
                 // Update the counter in CosmosDB
