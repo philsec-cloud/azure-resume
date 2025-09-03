@@ -5,6 +5,9 @@ on:
       branches: [ main ]
       paths:
       - 'backend/**'  
+permissions:
+  id-token: write
+  contents: read    
 
 env:
   AZURE_FUNCTIONAPP_NAME: 'GetResumeCounter'   # set this to your function app name on Azure
