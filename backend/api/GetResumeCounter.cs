@@ -37,7 +37,7 @@ namespace Company.Function
                 // Increment counter
                 counter.Count += 1;
 
-                // Update the counter in CosmosDB
+                // Updates the counter in CosmosDB
                 await container.UpsertItemAsync(counter, new PartitionKey("1"));
 
                 // Prepare HTTP responses
