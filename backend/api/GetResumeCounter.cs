@@ -40,7 +40,7 @@ namespace Company.Function
                 // Update the counter in CosmosDB
                 await container.UpsertItemAsync(counter, new PartitionKey("1"));
 
-                // Prepare HTTP response
+                // Prepare HTTP responses
                 var response = req.CreateResponse(HttpStatusCode.OK);
                 response.Headers.Add("Content-Type", "application/json");
                 await response.WriteStringAsync(JsonConvert.SerializeObject(counter));
